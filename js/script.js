@@ -191,6 +191,17 @@ window.addEventListener('load', function() {
     loadEmployees();
     populateTimeSelects();
     
+    // 1. Nastavíme globálne slovenčinu
+    flatpickr.localize(flatpickr.l10ns.sk); 
+
+    // 2. Aplikujeme Flatpickr na všetky inputy typu 'date'
+    flatpickr("input[type='date']", {
+        "dateFormat": "Y-m-d", // Pôvodný formát, ktorý potrebuje JS (napr. 2025-10-27)
+        "altInput": true,      // Vytvorí vizuálne krajší input pre používateľa
+        "altFormat": "d.m. Y",   // Formát, ktorý uvidí používateľ (napr. 27.10. 2025)
+        "allowInput": true     // Umožní používateľom písať dátum aj ručne
+    });
+    
     document.getElementById('zamestnanec').addEventListener('change', displayEmployeeDetails);
     
     const form = document.getElementById('cp-form');
