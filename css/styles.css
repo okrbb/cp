@@ -828,3 +828,119 @@ input.flatpickr-input[type="text"]:focus {
     /* Použijeme rovnaký focus tieň ako v originálnom CSS */
     box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); 
 }
+
+/* === 16. NOTIFICATION TOASTS === */
+
+/* Kontajner pre všetky notifikácie */
+#notification-container {
+    position: fixed;
+    top: 32px; /* Zhodné s paddingom .app-layout */
+    right: 32px; /* Zhodné s paddingom .app-layout */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 380px;
+    max-width: calc(100vw - 64px);
+}
+
+/* Samotná notifikácia (toast) */
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    padding: 20px;
+    background: var(--bg-elevated); /* Použije rovnaké pozadie ako panely */
+    border-radius: var(--radius-md); /* Použije rovnaké zaoblenie */
+    box-shadow: var(--shadow-lg); /* Použije rovnaký tieň */
+    border: 1px solid var(--border); /* Použije rovnaký okraj */
+    font-family: var(--font-body);
+    border-left-width: 5px;
+    cursor: pointer;
+    transition: all var(--transition-smooth); /* Použije rovnakú animáciu */
+    
+    /* Animácia príchodu */
+    animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animácia odchodu */
+.toast.fade-out {
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+/* Definícia farieb podľa typu */
+.toast--success {
+    border-left-color: #10B981; /* (Zelená pre úspech) */
+}
+.toast--success .toast-icon {
+    color: #10B981;
+}
+
+.toast--warning {
+    border-left-color: var(--primary); /* Použije vašu primárnu farbu */
+}
+.toast--warning .toast-icon {
+    color: var(--primary);
+}
+
+.toast--error {
+    border-left-color: #EF4444; /* (Červená pre chybu) */
+}
+.toast--error .toast-icon {
+    color: #EF4444;
+}
+
+/* Ikona v notifikácii */
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.toast-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Textový obsah */
+.toast-content {
+    flex-grow: 1;
+}
+.toast-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin: 0 0 4px 0;
+}
+.toast-message {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Zatváracie tlačidlo (voliteľné, ale dobrá prax) */
+.toast-close {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--gray-400);
+    transition: color var(--transition-base);
+}
+.toast-close:hover {
+    color: var(--text-primary);
+}
+
+/* Animačné kľúče */
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
