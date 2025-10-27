@@ -1,0 +1,720 @@
+/* =========================================
+   DESIGN SYSTEM 2025 - CESTOVNÝ PRÍKAZ
+   ========================================= */
+
+/* === 1. CSS CUSTOM PROPERTIES === */
+:root {
+    /* Farby - Warm Modern Palette 2025 */
+    --mocha: #6B5A4F;
+    --mocha-light: #8B7766;
+    --mocha-dark: #4A3F35;
+    
+    --primary: #F3B200;
+    --primary-dark: #4338CA;
+    --primary-light: #6366F1;
+    
+    --accent: #003366;
+    --accent-light: #F472B6;
+    
+    /* Neutrals */
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+    
+    /* Semantic Colors */
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-600);
+    --text-tertiary: var(--gray-500);
+    
+    --bg-body: #FAFAFA;
+    --bg-panel: #FFFFFF;
+    --bg-elevated: #FFFFFF;
+    
+    --border: var(--gray-200);
+    --border-focus: var(--primary-light);
+    
+    /* Typography */
+    --font-heading: 'Space Grotesk', -apple-system, system-ui, sans-serif;
+    --font-body: 'Inter', -apple-system, system-ui, sans-serif;
+    
+    /* Spacing & Sizing */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    
+    /* Shadows - 2025 Soft & Layered */
+    --shadow-sm: 
+        0 1px 2px 0 rgba(0, 0, 0, 0.03),
+        0 1px 3px 0 rgba(0, 0, 0, 0.02);
+    --shadow-md: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.06),
+        0 2px 4px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.08),
+        0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    
+    /* Transitions */
+    --transition-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === 2. RESET & BASE === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* === 3. ANIMATED BACKGROUND ORBS (2025 Trend) === */
+.background-orbs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: float 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    top: -200px;
+    left: -200px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(135deg, var(--accent), var(--primary-light));
+    bottom: -150px;
+    right: -150px;
+    animation-delay: 7s;
+}
+
+.orb-3 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--mocha), var(--primary));
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 14s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -30px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+/* === 4. MAIN LAYOUT === */
+form#cp-form {
+    display: block;
+    min-height: 100vh;
+}
+
+.app-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 32px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 32px;
+    height: 100vh;
+}
+
+/* === 5. SIDEBAR (LEFT PANEL) === */
+#sidebar {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    height: fit-content;
+    position: sticky;
+    top: 32px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    transition: transform var(--transition-smooth);
+}
+
+#sidebar:hover {
+    transform: translateY(-2px);
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Brand Header */
+.brand-header {
+    text-align: center;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--gray-100);
+    position: relative;
+}
+
+.brand-icon {
+    width: 117px;
+    height: 117px;
+    margin: 0 auto 16px;
+    background: white; /* Alebo transparent */
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+}
+
+
+/* Logo obrázok */
+.brand-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8px;
+}
+
+/* Employee Card - Glassmorphism */
+.employee-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-top: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-smooth);
+}
+
+.employee-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.employee-card p {
+    margin: 0 0 12px 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.employee-card p:last-child {
+    margin-bottom: 0;
+}
+
+.employee-card strong {
+    display: block;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* Progress Indicator - Ponechané len triedy použité v JS */
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+/* === 6. MAIN CONTENT === */
+#main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+}
+
+/* Header */
+.content-header {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.content-header h1 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.header-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.header-accent {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* Scrollable Content */
+#main-content-scrollable {
+    background: var(--bg-elevated);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    /* Skrytie posuvníka */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Skrytie posuvníka pre Webkit (Chrome, Safari) */
+#main-content-scrollable::-webkit-scrollbar {
+    display: none;
+}
+
+#main-content-scrollable::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 4px;
+}
+
+#main-content-scrollable::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 4px;
+    transition: background var(--transition-base);
+}
+
+#main-content-scrollable::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
+
+/* === 7. FORM SECTIONS === */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+fieldset legend {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+fieldset.form-section legend {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--gray-100);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* === 8. FORM INPUTS === */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.label-required {
+    color: var(--accent);
+}
+
+/* Text Inputs */
+/* UPRAVENÝ KÓD (ČASŤ 1) - Pre textové polia (tieň ostáva) */
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-panel);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+/* UPRAVENÝ KÓD (ČASŤ 2) - Pre select (bez tieňa) */
+select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-panel);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    transition: all var(--transition-base);
+    /* Riadok box-shadow: var(--shadow-sm); sme tu odstránili */
+}
+
+input[type="text"]:hover,
+input[type="date"]:hover,
+select:hover {
+    border-color: var(--gray-300);
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+input::placeholder {
+    color: var(--gray-400);
+}
+
+/* Select Wrapper */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--gray-500);
+    pointer-events: none;
+}
+
+select {
+    appearance: none;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+/* === 9. TIME GRID === */
+.time-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.time-block {
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid var(--border);
+}
+
+.time-block-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+/* === 10. COLUMNS LAYOUT === */
+.columns-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* === 11. ACCOUNTING ROWS === */
+.accounting-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.vyuctovanie-riadok {
+    display: grid;
+    grid-template-columns: 100px 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    transition: all var(--transition-base);
+}
+
+.vyuctovanie-riadok:hover {
+    background: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.row-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+}
+
+.vyuctovanie-riadok input {
+    margin-bottom: 0;
+}
+
+/* === 12. BUTTONS === */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 0;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Primary Button */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-primary:disabled {
+    background: var(--gray-300);
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background: white;
+    color: var(--text-secondary);
+    border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-300);
+    color: var(--text-primary);
+}
+
+/* === 13. RESPONSIVE === */
+@media (max-width: 1200px) {
+    .app-layout {
+        grid-template-columns: 1fr;
+        padding: 24px;
+    }
+    
+    #sidebar {
+        position: static;
+        margin-bottom: 24px;
+    }
+    
+    .time-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .columns-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    #sidebar,
+    .content-header,
+    #main-content-scrollable {
+        padding: 24px;
+        border-radius: var(--radius-lg);
+    }
+    
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .vyuctovanie-riadok {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .button-container {
+        flex-direction: column-reverse;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .progress-indicator {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .progress-line {
+        width: 2px;
+        height: 24px;
+        margin: 0;
+    }
+}
+
+/* === 14. ANIMATIONS === */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: slideIn 0.4s ease-out;
+}
+
+.form-section:nth-child(1) { animation-delay: 0.1s; }
+.form-section:nth-child(2) { animation-delay: 0.2s; }
+.form-section:nth-child(3) { animation-delay: 0.3s; }
+.form-section:nth-child(4) { animation-delay: 0.4s; }

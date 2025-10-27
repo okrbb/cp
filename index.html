@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cestovný príkaz</title>
+    <link rel="icon" href="css/favicon.png" type="image/x-icon">
+    <!-- Google Fonts - Space Grotesk pre moderný výraz -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Knižnice pre generovanie dokumentov -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://unpkg.com/pizzip@3.1.7/dist/pizzip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.49.1/docxtemplater.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <!-- Gradient Background Orbs (2025 trend) -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    
+    <form id="cp-form">
+        <div class="app-layout">
+            
+            <!-- ĽAVÝ PANEL (SIDEBAR) - Modernizovaný s 3D efektom -->
+            <aside id="sidebar">
+                <div class="sidebar-content">
+                    <!-- Logo/Branding sekcia -->
+                    <div class="brand-header">
+                        <div class="brand-icon">
+                            <img src="css/logo.png" alt="Logo" class="brand-logo-img">
+                        </div>
+                    </div>
+
+                    <fieldset>
+                        <legend>Výber zamestnanca</legend>
+                        <div class="form-group">
+                            <div class="select-wrapper">
+                                <select id="zamestnanec" name="zamestnanec" required>
+                                    <option value="">Načítavam...</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Employee Details Card s glassmorphism efektom -->
+                        <div id="employee-details" class="employee-card"></div>
+                    </fieldset>
+                </div>
+            </aside>
+            
+            <!-- PRAVÝ STĹPEC (MAIN CONTENT) -->
+            <main id="main-content-wrapper">
+                
+                <!-- Header s animovaným gradientom -->
+                <header class="content-header">
+                    <div class="header-content">
+                        <h1>
+                            <span>Cestovný príkaz</span>
+                        </h1>
+                        <p class="header-description">
+                            Vyplňte všetky potrebné údaje a vygenerujte profesionálny cestovný príkaz vo formáte DOCX
+                        </p>
+                    </div>
+                    <!-- Decorative element -->
+                    <div class="header-accent"></div>
+                </header>
+                
+                <!-- Scrollable Form Content -->
+                <div id="main-content-scrollable">
+                    
+                    <!-- 1. ZÁKLADNÉ ÚDAJE -->
+                    <fieldset class="form-section">
+                        <legend>
+                            Základné údaje o ceste
+                        </legend>
+                        
+                        <div class="form-group">
+                            <label for="ucel">
+                                <span class="label-text">Účel cesty</span>
+                                <span class="label-required">*</span>
+                            </label>
+                            <input type="text" id="ucel" name="ucel" 
+                                   placeholder="Napr. služobná cesta, konferencia..." required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="miesto">
+                                <span class="label-text">Miesto služobnej cesty</span>
+                                <span class="label-required">*</span>
+                            </label>
+                            <input type="text" id="miesto" name="miesto" 
+                                   placeholder="Napr. Bratislava, Košice..." required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="spolucestujuci">
+                                <span class="label-text">Spolucestujúci</span>
+                            </label>
+                            <input type="text" id="spolucestujuci" name="spolucestujuci" 
+                                   placeholder="Voliteľné - meno spolucestujúceho">
+                        </div>
+                    </fieldset>
+                    
+                    <!-- 2. ČASOVÉ ÚDAJE -->
+                    <fieldset class="form-section">
+                        <legend>
+                            Časové údaje
+                        </legend>
+                        
+                        <div class="time-grid">
+                            <!-- Začiatok cesty -->
+                            <div class="time-block">
+                                <h4 class="time-block-title">Začiatok cesty</h4>
+                                <div class="form-group">
+                                    <label for="datum_zc_datum">
+                                        <span class="label-text">Dátum</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="date" id="datum_zc_datum" name="datum_zc_datum" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="datum_zc_cas">
+                                        <span class="label-text">Čas</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <div class="select-wrapper">
+                                        <select id="datum_zc_cas" name="datum_zc_cas" required>
+                                            <option value="">-- čas --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Koniec cesty -->
+                            <div class="time-block">
+                                <h4 class="time-block-title">Koniec cesty</h4>
+                                <div class="form-group">
+                                    <label for="datum_kc_datum">
+                                        <span class="label-text">Dátum</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="date" id="datum_kc_datum" name="datum_kc_datum" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="datum_kc_cas">
+                                        <span class="label-text">Čas</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <div class="select-wrapper">
+                                        <select id="datum_kc_cas" name="datum_kc_cas" required>
+                                            <option value="">-- čas --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- 3. DÁTUMY PODPISOV -->
+                    <fieldset class="form-section">
+                        <legend>
+                            Dátumy podpisov
+                        </legend>
+                        
+                        <div class="columns-2">
+                            <div>
+                                <div class="form-group">
+                                    <label for="datum_1">
+                                        <span class="label-text">Dátum podpisu vedúceho</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="date" id="datum_1" name="datum_1" required>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label for="datum_2">
+                                        <span class="label-text">Dátum podpisu zamestnanca</span>
+                                        <span class="label-required">*</span>
+                                    </label>
+                                    <input type="date" id="datum_2" name="datum_2" required>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- 4. VYÚČTOVANIE CESTY -->
+                    <fieldset class="form-section">
+                        <legend>
+                            Vyúčtovanie cesty
+                        </legend>
+                        
+                        <div class="accounting-container">
+                            <!-- Riadok 1 -->
+                            <div class="vyuctovanie-riadok">
+                                <strong class="row-label">1. deň</strong>
+                                <input type="text" id="cesta_z1" name="cesta_z1" placeholder="Cesta z...">
+                                <input type="text" id="miesto_1" name="miesto_1" placeholder="Miesto">
+                                <input type="text" id="cesta_k1" name="cesta_k1" placeholder="Cesta do...">
+                            </div>
+                            
+                            <!-- Riadok 2 -->
+                            <div class="vyuctovanie-riadok">
+                                <strong class="row-label">2. deň</strong>
+                                <input type="text" id="cesta_z2" name="cesta_z2" placeholder="Cesta z...">
+                                <input type="text" id="miesto_2" name="miesto_2" placeholder="Miesto">
+                                <input type="text" id="cesta_k2" name="cesta_k2" placeholder="Cesta do...">
+                            </div>
+                            
+                            <!-- Riadok 3 -->
+                            <div class="vyuctovanie-riadok">
+                                <strong class="row-label">3. deň</strong>
+                                <input type="text" id="cesta_z3" name="cesta_z3" placeholder="Cesta z...">
+                                <input type="text" id="miesto_3" name="miesto_3" placeholder="Miesto">
+                                <input type="text" id="cesta_k3" name="cesta_k3" placeholder="Cesta do...">
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- ACTION BUTTONS -->
+                    <div class="button-container">
+                        <button type="reset" class="btn btn-secondary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Vymazať formulár</span>
+                        </button>
+                        <button type="submit" id="generate-btn" class="btn btn-primary">
+                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Generovať cestovný príkaz</span>
+                        </button>
+                    </div>
+                    
+                </div>
+            </main>
+            
+        </div>
+    </form>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
