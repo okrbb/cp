@@ -326,7 +326,7 @@ window.addEventListener('load', function() {
                 dateForFilename = standardDate.replace(/\./g, '-');
             }
             
-            const finalFilename = `cestovny_prikaz_${miesto}${dateForFilename}.docx`;
+            const finalFilename = `cestovny_prikaz_'miesto'${dateForFilename}.docx`;
             
             const selectedOEC = document.getElementById('zamestnanec').value;
             const selectedEmployee = employeesData.find(emp => emp.OEC === selectedOEC);
