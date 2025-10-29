@@ -5,7 +5,7 @@
 let employeesData = [];
 
 // --- ZAČIATOK ÚPRAVY: Nová funkcia pre notifikácie ---
-
+// (Kód funkcie showToast() zostáva bezo zmeny)
 /**
  * Zobrazí "toast" notifikáciu v dizajne aplikácie.
  * @param {string} message - Hlavná správa notifikácie.
@@ -84,6 +84,30 @@ function formatDate(dateString) {
         return dateString;
     }
 }
+
+// --- ZAČIATOK ÚPRAVY (Názov súboru) ---
+/**
+ * Pomocná funkcia na "očistenie" textu pre použitie v názve súboru.
+ * Odstráni diakritiku, špeciálne znaky a nahradí medzery podčiarkovníkmi.
+ * @param {string} text - Vstupný text (napr. názov miesta).
+ * @returns {string} - Očistený text.
+ */
+function sanitizeForFilename(text) {
+    if (!text) return "nezadane_miesto"; // Vráti text, ak je pole prázdne
+    
+    // Odstránenie diakritiky (napr. "Žilina" -> "Zilina")
+    const normalizedText = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    // Prevedenie na malé písmená, nahradenie medzier za '_', odstránenie nebezpečných znakov
+    return normalizedText
+        .toLowerCase()
+        .replace(/\s+/g, '_') // Nahradí jednu alebo viac medzier za _
+        .replace(/[.,\\\/#!$%\^&\*;:{}=\-`~()?<>|"]/g, "") // Odstráni neplatné znaky
+        .replace(/_+/g, '_') // Ak vznikli viacnásobné __, nahradí ich jedným
+        .replace(/^_|_$/g, ''); // Odstráni prípadný _ na začiatku alebo konci
+}
+// --- KONIEC ÚPRAVY (Názov súboru) ---
+
 
 /**
  * Načíta zamestnancov z config.json a naplní rozbaľovací zoznam.
@@ -167,6 +191,7 @@ function populateTimeSelects() {
  * Zobrazí detaily vybraného zamestnanca v sidebare.
  */
 function displayEmployeeDetails(event) {
+    // ... (kód funkcie bezo zmeny)
     const selectedOEC = event.target.value;
     const detailsContainer = document.getElementById('employee-details');
     
@@ -220,7 +245,7 @@ function updateProgressIndicator(step) {
  * Hlavná funkcia na načítanie šablóny, vloženie dát a generovanie súboru.
  */
 async function generateDocx(data, filename) {
-    // ... (kód funkcie bezo zmeny až po catch blok)
+    // ... (kód funkcie bezo zmeny)
     const templatePath = 'files/cp.docx';
     const generateBtn = document.getElementById('generate-btn');
     
@@ -260,7 +285,7 @@ async function generateDocx(data, filename) {
         setTimeout(() => updateProgressIndicator(2), 2000);
         
         // --- ÚPRAVA: Pridanie notifikácie o úspechu ---
-        showToast(" príkaz bol úspešne vygenerovaný.", "success", "Hotovo");
+        showToast("Cestovný príkaz bol úspešne vygenerovaný.", "success", "Hotovo"); // Opravená správa
         
     } catch (error) {
         console.error('Nastala chyba pri generovaní dokumentu:', error);
@@ -268,7 +293,7 @@ async function generateDocx(data, filename) {
         showToast(`Nastala chyba: ${error.message}. Skontrolujte, či súbor files/cp.docx existuje.`, 'error', 'Chyba generovania');
     } finally {
         generateBtn.disabled = false;
-        generateBtn.querySelector('span').textContent = 'Generovať  príkaz';
+        generateBtn.querySelector('span').textContent = 'Generovať Cestovný príkaz'; // Opravený text tlačidla
     }
 }
 
@@ -316,17 +341,31 @@ window.addEventListener('load', function() {
             }
             
             if (!standardDate) {
+                // Ak stále nie je dátum, vezme dnešný
                 standardDate = new Date().toISOString().split('T')[0];
             }
             
             try {
+                // Formátovanie dátumu na DD-MM-YYYY
                 const [year, month, day] = standardDate.split('-');
                 dateForFilename = `${day}-${month}-${year}`;
             } catch (e) {
+                // Fallback, ak by bol formát iný
                 dateForFilename = standardDate.replace(/\./g, '-');
             }
             
-            const finalFilename = `cestovny_prikaz_${dateForFilename}.docx`;
+            // --- ZAČIATOK ÚPRAVY (Názov súboru) ---
+            
+            // 1. Získame hodnotu 'miesto'
+            const miestoValue = document.getElementById('miesto').value;
+            
+            // 2. Očistíme 'miesto' pomocou novej pomocnej funkcie
+            const miestoForFilename = sanitizeForFilename(miestoValue);
+
+            // 3. Zostavíme finálny názov v tvare: cestovny_prikaz_miesto_dátum.docx
+            const finalFilename = `cestovny_prikaz_${miestoForFilename}_${dateForFilename}.docx`;
+            
+            // --- KONIEC ÚPRAVY (Názov súboru) ---
             
             const selectedOEC = document.getElementById('zamestnanec').value;
             const selectedEmployee = employeesData.find(emp => emp.OEC === selectedOEC);
@@ -356,7 +395,7 @@ window.addEventListener('load', function() {
                 adresa: adresaPreSablonu,
                 ucet: ucetPreSablonu,
                 ucel: document.getElementById('ucel').value,
-                miesto: document.getElementById('miesto').value,
+                miesto: document.getElementById('miesto').value, // Hodnota 'miesto' sa stále posiela do šablóny
                 datum_zc: datum_zc_final,
                 datum_kc: datum_kc_final,
                 spolucestujuci: document.getElementById('spolucestujuci').value,
