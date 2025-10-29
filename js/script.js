@@ -260,7 +260,7 @@ async function generateDocx(data, filename) {
         setTimeout(() => updateProgressIndicator(2), 2000);
         
         // --- ÚPRAVA: Pridanie notifikácie o úspechu ---
-        showToast("Cestovný príkaz bol úspešne vygenerovaný.", "success", "Hotovo");
+        showToast(" príkaz bol úspešne vygenerovaný.", "success", "Hotovo");
         
     } catch (error) {
         console.error('Nastala chyba pri generovaní dokumentu:', error);
@@ -268,7 +268,7 @@ async function generateDocx(data, filename) {
         showToast(`Nastala chyba: ${error.message}. Skontrolujte, či súbor files/cp.docx existuje.`, 'error', 'Chyba generovania');
     } finally {
         generateBtn.disabled = false;
-        generateBtn.querySelector('span').textContent = 'Generovať cestovný príkaz';
+        generateBtn.querySelector('span').textContent = 'Generovať  príkaz';
     }
 }
 
@@ -326,7 +326,7 @@ window.addEventListener('load', function() {
                 dateForFilename = standardDate.replace(/\./g, '-');
             }
             
-            const finalFilename = `cestovny_prikaz_${dateForFilename}.docx`;
+            const finalFilename = `cestovny_prikaz_${miesto}${dateForFilename}.docx`;
             
             const selectedOEC = document.getElementById('zamestnanec').value;
             const selectedEmployee = employeesData.find(emp => emp.OEC === selectedOEC);
