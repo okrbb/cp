@@ -177,7 +177,7 @@ function displayEmployeeDetails(event) {
         detailsContainer.innerHTML = `
             <p><strong>Meno:</strong> ${selectedEmployee.meno} ${selectedEmployee.priezvisko}, ${selectedEmployee.titul}</p>
             <p><strong>Osobné číslo:</strong> ${selectedEmployee.OEC}</p>
-            <p><strong>Trvalý pobyt:</strong> ${selectedEmployee.adresa}</p>
+            <p><strong>Trvalý pobyt:</strong> <span class="blurred-text">${selectedEmployee.adresa}</span></p>
         `;
         if (selectedEmployee.ucet && selectedEmployee.ucet.trim() !== "") {
             showToast("Číslo účtu zamestnanca bolo úspešne načítané.", "success", "Info");

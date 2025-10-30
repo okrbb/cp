@@ -174,15 +174,12 @@ form#cp-form {
 
 /* === 5. SIDEBAR (LEFT PANEL) === */
 #sidebar {
-    background: var(--bg-elevated);
+    background: var(--glass-bg); /* <-- ZMENA */
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
     padding: 32px;
-    height: fit-content;
-    position: sticky;
-    top: 32px;
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
+    backdrop-filter: blur(10px); /* (Tento riadok už existoval) */
+    border: 1px solid var(--glass-border); /* <-- ZMENA */
     transition: transform var(--transition-smooth);
 }
 
@@ -200,7 +197,6 @@ form#cp-form {
 .brand-header {
     text-align: center;
     padding-bottom: 24px;
-    border-bottom: 2px solid var(--gray-100);
     position: relative;
 }
 
@@ -208,14 +204,20 @@ form#cp-form {
     width: 117px;
     height: 117px;
     margin: 0 auto 16px;
-    background: white; /* Alebo transparent */
+    background: transparent;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-md);
+    transition: all var(--transition-smooth);
 }
 
+.brand-icon:hover {
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--accent), var(--primary), var(--accent));
+    background-size: 300% 300%;
+    animation: gradientPan 4s ease infinite;
+}
 
 /* Logo obrázok */
 .brand-logo-img {
@@ -223,6 +225,16 @@ form#cp-form {
     height: 100%;
     object-fit: contain;
     padding: 8px;
+    position: relative; 
+    z-index: 2;        
+    transition: filter var(--transition-smooth), 
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3D efekt pre logo pri prejdení myšou */
+.brand-icon:hover .brand-logo-img {
+    transform: scale(1.63) rotate(360deg); 
+    filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3)); /* Pridá tieň */
 }
 
 /* Employee Card - Glassmorphism */
@@ -273,20 +285,21 @@ form#cp-form {
 #main-content-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 9px;
     overflow: hidden;
     border-radius: var(--radius-xl);
 }
 
 /* Header */
 .content-header {
-    background: var(--bg-elevated);
+    background: var(--glass-bg); /* <-- ZMENA */
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     padding: 32px;
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border); /* <-- ZMENA */
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(10px); /* <-- PRIDANÉ */
 }
 
 .header-content {
@@ -318,20 +331,23 @@ form#cp-form {
     filter: blur(60px);
     opacity: 0.15;
     pointer-events: none;
+    z-index: -1;
+    display: none;
 }
 
 /* Scrollable Content */
 #main-content-scrollable {
-    background: var(--bg-elevated);
+    background: var(--glass-bg); /* <-- ZMENA */
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     padding: 32px;
     box-shadow: var(--shadow-lg);
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border); /* <-- ZMENA */
     flex-grow: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 32px;
+    backdrop-filter: blur(10px); /* <-- PRIDANÉ */
 
     /* Skrytie posuvníka */
     scrollbar-width: none;
@@ -710,6 +726,18 @@ select {
     }
 }
 
+@keyframes gradientPan {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .form-section {
     animation: slideIn 0.4s ease-out;
 }
@@ -943,4 +971,29 @@ input.flatpickr-input[type="text"]:focus {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+/* === 17. OCHRANA OSOBNÝCH ÚDAJOV === */
+
+.blurred-text {
+    /* Skryje pôvodný text a nahradí ho rozmazaným tieňom */
+    color: transparent;
+    text-shadow: 0 0 5px var(--text-secondary);
+    
+    /* Plynulý prechod pre odhalenie */
+    transition: all 0.3s var(--transition-smooth);
+    
+    /* Ukáže kurzor, že sa s tým dá niečo robiť */
+    cursor: help; 
+    
+    /* Zabráni nechcenému kopírovaniu */
+    user-select: none; 
+}
+
+.blurred-text:hover {
+    /* Pri prejdení myšou sa text odhalí */
+    color: var(--text-primary);
+    text-shadow: none;
+    cursor: default;
+    user-select: auto;
 }
