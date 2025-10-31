@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cestovný príkaz</title>
     <link rel="icon" href="css/favicon.png" type="image/x-icon">
-    <!-- Google Fonts - Space Grotesk pre moderný výraz -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="css/styles.css">
     
-    <!-- Knižnice pre generovanie dokumentov -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://unpkg.com/pizzip@3.1.7/dist/pizzip.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.49.1/docxtemplater.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
-    <!-- Gradient Background Orbs (2025 trend) -->
     <div class="background-orbs">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -29,10 +27,8 @@
     <form id="cp-form">
         <div class="app-layout">
             
-            <!-- ĽAVÝ PANEL (SIDEBAR) - Modernizovaný s 3D efektom -->
             <aside id="sidebar">
                 <div class="sidebar-content">
-                    <!-- Logo/Branding sekcia -->
                     <div class="brand-header">
                         <div class="brand-icon">
                             <img src="css/logo.svg" alt="Logo" class="brand-logo-img">
@@ -49,30 +45,25 @@
                             </div>
                         </div>
                         
-                        <!-- Employee Details Card s glassmorphism efektom -->
-                        <div id="employee-details" class="employee-card"></div>
+                        <div id="employee-details" class="employee-card">
+                            </div>
                     </fieldset>
                 </div>
             </aside>
             
-            <!-- PRAVÝ STĹPEC (MAIN CONTENT) -->
             <main id="main-content-wrapper">
                 
-                <!-- Header s animovaným gradientom -->
                 <header class="content-header">
                     <div class="header-content">
                         <h1>
                             <span>Cestovný príkaz</span>
                         </h1>
                     </div>
-                    <!-- Decorative element -->
                     <div class="header-accent"></div>
                 </header>
                 
-                <!-- Scrollable Form Content -->
                 <div id="main-content-scrollable">
                     
-                    <!-- 1. ZÁKLADNÉ ÚDAJE -->
                     <fieldset class="form-section">
                         <legend>
                             Základné údaje o ceste
@@ -105,14 +96,12 @@
                         </div>
                     </fieldset>
                     
-                    <!-- 2. ČASOVÉ ÚDAJE -->
                     <fieldset class="form-section">
                         <legend>
                             Časové údaje
                         </legend>
                         
                         <div class="time-grid">
-                            <!-- Začiatok cesty -->
                             <div class="time-block">
                                 <h4 class="time-block-title">Začiatok cesty</h4>
                                 <div class="form-group">
@@ -136,7 +125,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Koniec cesty -->
                             <div class="time-block">
                                 <h4 class="time-block-title">Koniec cesty</h4>
                                 <div class="form-group">
@@ -162,7 +150,6 @@
                         </div>
                     </fieldset>
                     
-                    <!-- 3. DÁTUMY PODPISOV -->
                     <fieldset class="form-section">
                         <legend>
                             Dátumy podpisov
@@ -190,14 +177,12 @@
                         </div>
                     </fieldset>
                     
-                    <!-- 4. VYÚČTOVANIE CESTY -->
                     <fieldset class="form-section">
                         <legend>
                             Vyúčtovanie cesty
                         </legend>
                         
                         <div class="accounting-container">
-                            <!-- Riadok 1 -->
                             <div class="vyuctovanie-riadok">
                                 <strong class="row-label">1. deň</strong>
                                 <input type="text" id="cesta_z1" name="cesta_z1" placeholder="Cesta z...">
@@ -205,7 +190,6 @@
                                 <input type="text" id="cesta_k1" name="cesta_k1" placeholder="Cesta do...">
                             </div>
                             
-                            <!-- Riadok 2 -->
                             <div class="vyuctovanie-riadok">
                                 <strong class="row-label">2. deň</strong>
                                 <input type="text" id="cesta_z2" name="cesta_z2" placeholder="Cesta z...">
@@ -213,7 +197,6 @@
                                 <input type="text" id="cesta_k2" name="cesta_k2" placeholder="Cesta do...">
                             </div>
                             
-                            <!-- Riadok 3 -->
                             <div class="vyuctovanie-riadok">
                                 <strong class="row-label">3. deň</strong>
                                 <input type="text" id="cesta_z3" name="cesta_z3" placeholder="Cesta z...">
@@ -223,15 +206,10 @@
                         </div>
                     </fieldset>
                     
-                    <!-- ACTION BUTTONS -->
                     <div class="button-container">
-                        <button type="reset" class="btn btn-secondary"><i class="fas fa-trash"></i>Vymazať formulár</button>
-                        <button type="submit" id="generate-btn" class="btn btn-primary">
-                            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Generovať cestovný príkaz</span>
-                        </button>
+                        <button type="reset" class="btn btn-secondary"><i class="fas fa-trash"></i><span>Vymazať formulár</span></button>
+                        
+                        <button type="submit" id="generate-btn" class="btn btn-primary"><i class="fas fa-download"></i><span>Generovať cestovný príkaz</span></button>
                     </div>
                     
                 </div>
@@ -239,15 +217,11 @@
             
         </div>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://npmcdn.com/flatpickr/dist/l10n/sk.js"></script>
-    <script src="js/script.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/sk.js"></script>
     <script src="js/script.js"></script>
     
     <div id="notification-container"></div>
-    </body>
-</html>
 </body>
 </html>
