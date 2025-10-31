@@ -617,17 +617,13 @@ select {
 
 /* Primary Button */
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    background: var(--accent); /* ZMENA: Zmenené na plnú --accent farbu */
     color: white;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
-}
-
-.btn-primary:active {
-    transform: translateY(0);
+  filter: brightness(1.8); 
+  box-shadow: 0 0 12px 3px rgba(0, 51, 102, 0.4); 
 }
 
 .btn-primary:disabled {
