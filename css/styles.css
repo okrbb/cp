@@ -39,6 +39,7 @@
     
     --border: var(--gray-200);
     --border-focus: var(--primary-light);
+    --destructive-color: #EF4444; /* Červená pre chyby a deštruktívne akcie */
     
     /* Typography */
     --font-heading: 'Space Grotesk', -apple-system, system-ui, sans-serif;
@@ -213,10 +214,8 @@ form#cp-form {
 }
 
 .brand-icon:hover {
-    box-shadow: var(--shadow-lg);
-    background: linear-gradient(135deg, var(--accent), var(--primary), var(--accent));
-    background-size: 300% 300%;
-    animation: gradientPan 4s ease infinite;
+    background: transparent;
+    animation: none;
 }
 
 /* Logo obrázok */
@@ -227,13 +226,13 @@ form#cp-form {
     padding: 8px;
     position: relative; 
     z-index: 2;        
-    transition: filter var(--transition-smooth), 
-                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    /* ZMENA: Odstránená tranzícia pre 'filter', ponechaná len pre 'transform' */
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 3D efekt pre logo pri prejdení myšou */
 .brand-icon:hover .brand-logo-img {
-    transform: scale(1.63) rotate(360deg); 
+    transform: scale(2.36) rotate(360deg); 
     filter: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3)); /* Pridá tieň */
 }
 
@@ -640,14 +639,14 @@ select {
 /* Secondary Button */
 .btn-secondary {
     background: white;
-    color: var(--text-secondary);
-    border: 2px solid var(--border);
+    color: var(--destructive-color); /* ZMENA: Červený text */
+    border: 2px solid var(--destructive-color); /* ZMENA: Červené orámovanie */
 }
 
 .btn-secondary:hover {
-    background: var(--gray-50);
-    border-color: var(--gray-300);
-    color: var(--text-primary);
+    background: var(--destructive-color); /* ZMENA: Červené pozadie */
+    border-color: var(--destructive-color); /* ZMENA: Červené orámovanie (pre istotu) */
+    color: white; /* ZMENA: Biely text */
 }
 
 /* === 13. RESPONSIVE === */
